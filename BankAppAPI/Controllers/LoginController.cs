@@ -29,7 +29,7 @@ namespace BankApp.API.Controllers
             if (user != null)
             {
                 var tokenString = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenString });
+                response = Ok(new { AccessToken = tokenString });
             }
 
             return response;

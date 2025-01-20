@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using BankApp.Web.Models;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
@@ -18,29 +17,30 @@ public class DashboardsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        //if (!_tokenService.IsTokenAvailable())
-        //{
-        //    return RedirectToAction("Login", "Auth");
-        //}
+        Console.WriteLine(_tokenService);
+        if (!_tokenService.IsTokenAvailable())
+        {
+            return RedirectToAction("Login", "Auth");
+        }
 
-        //var client = _httpClientFactory.CreateClient("ApiClient");
-        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenService.GetToken());
+        var client = _httpClientFactory.CreateClient("ApiClient");
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenService.GetToken());
 
-        //var response = await client.GetAsync("Login"); 
-        //if (response.IsSuccessStatusCode)
-        //{
-        //    string accountDetails = await response.Content.ReadAsStringAsync();
-        //    var account = JsonConvert.DeserializeObject<Account>(accountDetails);
-        //    return View(account);
-        //}
+        var response = await client.GetAsync("Login");
+        if (response.IsSuccessStatusCode)
+        {
+            string accountDetails = await response.Content.ReadAsStringAsync();
+            var account = JsonConvert.DeserializeObject<Account>(accountDetails);
+            return View(account);
+        }
 
-        //if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-        //{
-        //    _tokenService.StoreToken(null); // Clear the token if unauthorized
-        //    return RedirectToAction("Login", "Auth");
-        //}
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        {
+            _tokenService.StoreToken(null); // Clear the token if unauthorized
+            return RedirectToAction("Login", "Auth");
+        }
 
-        //ViewBag.Error = "Unable to load account details.";
+        ViewBag.Error = "Unable to load account details.";
         return View();
     }
 }
