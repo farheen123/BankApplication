@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BankApp.Web.Models.AccountViewModel>
+
+@{
+    ViewData["Title"] = "Account List";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="card">
+    <h5 class="card-header">Account List</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="table-border-bottom-0">
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
